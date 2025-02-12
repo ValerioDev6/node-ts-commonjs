@@ -1,9 +1,9 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from 'express';
 
 export class FileUploadMiddleware {
   static containFiles(req: Request, res: Response, next: NextFunction): void {
     if (!req.files || Object.keys(req.files).length === 0) {
-      res.status(400).json({ error: "No files were upload" });
+      res.status(400).json({ error: 'No files were upload' });
       return;
     }
 

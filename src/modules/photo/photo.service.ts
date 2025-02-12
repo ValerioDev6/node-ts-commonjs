@@ -1,11 +1,11 @@
-import { UploadedFile } from "express-fileupload";
-import { CustomError } from "../../shared/errors/custom-error";
-import path from "path";
-import { Uuid } from "../../config/uuid.adpater";
-import fs from "fs";
-import { envs, getRepositoryFactory } from "../../config";
-import { ProfileEntity } from "./entities/profile.entity";
-import { Repository } from "typeorm";
+import { UploadedFile } from 'express-fileupload';
+import { CustomError } from '../../shared/errors/custom-error';
+import path from 'path';
+import { Uuid } from '../../config/uuid.adpater';
+import fs from 'fs';
+import { envs, getRepositoryFactory } from '../../config';
+import { ProfileEntity } from './entities/profile.entity';
+import { Repository } from 'typeorm';
 export class PhotoService {
   private readonly profileRepository: Repository<ProfileEntity>;
 
@@ -20,7 +20,7 @@ export class PhotoService {
   }
 
   async createProfile(data: any, image: UploadedFile): Promise<ProfileEntity> {
-    const { fileUrl } = await this.uploadSingle(image, "uploads/profiles");
+    const { fileUrl } = await this.uploadSingle(image, 'uploads/profiles');
 
     const profile = this.profileRepository.create({
       title: data.title,
@@ -35,12 +35,12 @@ export class PhotoService {
   async getAllProfiles(): Promise<ProfileEntity[]> {
     try {
       const profiles = await this.profileRepository.find({
-        order: { title: "asc" },
+        order: { title: 'asc' },
       });
       return profiles;
     } catch (error) {
       console.error({ error });
-      throw new CustomError(500, "Error al obtener perfiles");
+      throw new CustomError(500, 'Error al obtener perfiles');
     }
   }
 
@@ -54,18 +54,18 @@ export class PhotoService {
       }
       return profile;
     } catch (error) {
-      throw CustomError.internalServe("Error al obtener el perfil");
+      throw CustomError.internalServe('Error al obtener el perfil');
     }
   }
 
-  async uploadSingle(file: UploadedFile, folder: string = "uploads", validExtension: string[] = ["png", "jpg", "jpeg", "gif"]) {
+  async uploadSingle(file: UploadedFile, folder: string = 'uploads', validExtension: string[] = ['png', 'jpg', 'jpeg', 'gif']) {
     try {
-      const fileExtension = file.mimetype.split("/").at(1) ?? "";
+      const fileExtension = file.mimetype.split('/').at(1) ?? '';
       if (!validExtension.includes(fileExtension)) {
         throw CustomError.badRequest(`Invalid extension: ${fileExtension}`);
       }
 
-      const destination = path.resolve(__dirname, "../../../", folder);
+      const destination = path.resolve(__dirname, '../../../', folder);
       this.checkFolder(destination);
       const fileName = `${Uuid.v4()}.${fileExtension}`;
       const filePath = `${destination}/${fileName}`;
@@ -78,7 +78,7 @@ export class PhotoService {
       return { fileName, fileUrl };
     } catch (error) {
       console.log({ error });
-      throw CustomError.internalServe("Error uploading file");
+      throw CustomError.internalServe('Error uploading file');
     }
   }
 
@@ -91,13 +91,13 @@ export class PhotoService {
 
       if (image) {
         if (profile.imagePath) {
-          const relativePath = profile.imagePath.replace(`${envs.BASE_URL}/`, "");
-          const oldFilePath = path.resolve(__dirname, "../../../", relativePath);
+          const relativePath = profile.imagePath.replace(`${envs.BASE_URL}/`, '');
+          const oldFilePath = path.resolve(__dirname, '../../../', relativePath);
           if (fs.existsSync(oldFilePath)) {
             fs.unlinkSync(oldFilePath);
           }
         }
-        const { fileUrl } = await this.uploadSingle(image, "uploads/profiles");
+        const { fileUrl } = await this.uploadSingle(image, 'uploads/profiles');
         profile.imagePath = fileUrl;
       }
 
@@ -109,7 +109,7 @@ export class PhotoService {
       return profile;
     } catch (error) {
       console.error({ error });
-      throw new CustomError(500, "Error al actualizar el perfil");
+      throw new CustomError(500, 'Error al actualizar el perfil');
     }
   }
 
@@ -121,8 +121,8 @@ export class PhotoService {
       }
 
       if (profile.imagePath) {
-        const relativePath = profile.imagePath.replace(`${envs.BASE_URL}/`, "");
-        const filePath = path.resolve(__dirname, "../../../", relativePath);
+        const relativePath = profile.imagePath.replace(`${envs.BASE_URL}/`, '');
+        const filePath = path.resolve(__dirname, '../../../', relativePath);
         if (fs.existsSync(filePath)) {
           fs.unlinkSync(filePath);
         }
@@ -131,7 +131,7 @@ export class PhotoService {
       await this.profileRepository.remove(profile);
     } catch (error) {
       console.error({ error });
-      throw new CustomError(500, "Error al eliminar el perfil");
+      throw new CustomError(500, 'Error al eliminar el perfil');
     }
   }
 }

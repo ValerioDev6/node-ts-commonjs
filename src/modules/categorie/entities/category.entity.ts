@@ -1,16 +1,9 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from "typeorm";
-import { ProductEntity } from "../../product/entities/product.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { ProductEntity } from '../../product/entities/product.entity';
 
-@Entity({ name: "category" })
+@Entity({ name: 'category' })
 export class CategoryEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
@@ -20,14 +13,14 @@ export class CategoryEntity {
   products: ProductEntity[];
 
   @CreateDateColumn({
-    type: "timestamp",
-    name: "created_at",
+    type: 'timestamp',
+    name: 'created_at',
   })
   createdAt: Date;
 
   @UpdateDateColumn({
-    type: "timestamp",
-    name: "updated_at",
+    type: 'timestamp',
+    name: 'updated_at',
   })
   updatedAt: Date;
 }

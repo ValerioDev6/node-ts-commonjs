@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from "express";
-import { PhotoService } from "./photo.service";
-import { UploadedFile } from "express-fileupload";
-import { CustomError } from "../../shared/errors/custom-error";
+import { NextFunction, Request, Response } from 'express';
+import { PhotoService } from './photo.service';
+import { UploadedFile } from 'express-fileupload';
+import { CustomError } from '../../shared/errors/custom-error';
 
 export class PhotoController {
   constructor(public readonly profileService: PhotoService) {}
@@ -10,7 +10,7 @@ export class PhotoController {
     if (error instanceof CustomError) {
       return res.status(error.statusCode).json({ error: error.message });
     }
-    return res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: 'Internal server error' });
   };
 
   // async createProfile(req: Request, res: Response): Promise<Response> {
@@ -28,7 +28,7 @@ export class PhotoController {
   // }
   createProfile = (req: Request, res: Response) => {
     if (!req.files?.image) {
-      return res.status(400).json({ error: "No image file provided" });
+      return res.status(400).json({ error: 'No image file provided' });
     }
 
     const image = req.files.image as UploadedFile;
@@ -84,7 +84,7 @@ export class PhotoController {
     const { id } = req.params;
     this.profileService
       .deleteProfile(id)
-      .then(() => res.json({ message: "Profile deleted successfully" }))
+      .then(() => res.json({ message: 'Profile deleted successfully' }))
       .catch((error) => this.handleError(error, res));
   };
 

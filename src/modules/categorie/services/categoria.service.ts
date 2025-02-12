@@ -1,10 +1,10 @@
-import { DeleteResult, Repository } from "typeorm";
-import { CategoryEntity } from "../entities/category.entity";
-import { getRepositoryFactory } from "../../../config";
-import { PaginationDto } from "../../../shared/dtos/pagination.dto";
-import { CustomError } from "../../../shared/errors/custom-error";
-import { CreateCategoryDto } from "../dto/create-category.dto";
-import { UpdateCategoryDto } from "../dto/update-category.dto";
+import { DeleteResult, Repository } from 'typeorm';
+import { CategoryEntity } from '../entities/category.entity';
+import { getRepositoryFactory } from '../../../config';
+import { PaginationDto } from '../../../shared/dtos/pagination.dto';
+import { CustomError } from '../../../shared/errors/custom-error';
+import { CreateCategoryDto } from '../dto/create-category.dto';
+import { UpdateCategoryDto } from '../dto/update-category.dto';
 
 export class CategoryService {
   private readonly categoryRepository: Repository<CategoryEntity>;
@@ -20,7 +20,7 @@ export class CategoryService {
       const [category, total] = await this.categoryRepository.findAndCount({
         skip: (page - 1) * limit,
         take: limit,
-        order: { categoryName: "ASC" },
+        order: { categoryName: 'ASC' },
       });
 
       return {
@@ -35,7 +35,7 @@ export class CategoryService {
       };
     } catch (error) {
       console.error({ error });
-      throw new CustomError(500, "Error al obtener category");
+      throw new CustomError(500, 'Error al obtener category');
     }
   }
 
@@ -44,7 +44,7 @@ export class CategoryService {
       where: { categoryName: createCategoryDto.categoryName },
     });
 
-    if (categoryExists) throw CustomError.badRequest("Category already exists");
+    if (categoryExists) throw CustomError.badRequest('Category already exists');
 
     try {
       const categoryData = { ...createCategoryDto };
@@ -76,14 +76,14 @@ export class CategoryService {
     const category = await this.getCategoryById(id);
 
     if (!category) {
-      throw CustomError.notFound("Category not found");
+      throw CustomError.notFound('Category not found');
     }
     try {
       await this.categoryRepository.update(id, updateCategoryDto);
       const updatedCategory = await this.getCategoryById(id);
 
       if (!updatedCategory) {
-        throw CustomError.notFound("Updated category not found");
+        throw CustomError.notFound('Updated category not found');
       }
 
       return updatedCategory;

@@ -1,10 +1,10 @@
-import { Repository } from "typeorm";
-import { UserEntity } from "../entities/user.entity";
-import { RoleType } from "../dto/rol.enum";
-import { bcryptAdpater, getRepositoryFactory } from "../../../config";
-import { CustomError } from "../../../shared/errors/custom-error";
-import { PaginationDto } from "../../../shared/dtos/pagination.dto";
-import { RegisterUserDto } from "../dto/register-user.dto";
+import { Repository } from 'typeorm';
+import { UserEntity } from '../entities/user.entity';
+import { RoleType } from '../dto/rol.enum';
+import { bcryptAdpater, getRepositoryFactory } from '../../../config';
+import { CustomError } from '../../../shared/errors/custom-error';
+import { PaginationDto } from '../../../shared/dtos/pagination.dto';
+import { RegisterUserDto } from '../dto/register-user.dto';
 
 export class UserService {
   private readonly userRepository: Repository<UserEntity>;
@@ -15,12 +15,12 @@ export class UserService {
   async findAllUser(): Promise<UserEntity[]> {
     try {
       const users = await this.userRepository.find({
-        order: { name: "ASC" },
+        order: { name: 'ASC' },
       });
       return users;
     } catch (error) {
       console.error(error);
-      throw new CustomError(500, "Error al obtener usuarios");
+      throw new CustomError(500, 'Error al obtener usuarios');
     }
   }
 
@@ -31,7 +31,7 @@ export class UserService {
       const [users, total] = await this.userRepository.findAndCount({
         skip: (page - 1) * limit,
         take: limit,
-        order: { name: "ASC" },
+        order: { name: 'ASC' },
       });
 
       return {
@@ -46,7 +46,7 @@ export class UserService {
       };
     } catch (error) {
       console.error(error);
-      throw new CustomError(500, "Error al obtener usuarios");
+      throw new CustomError(500, 'Error al obtener usuarios');
     }
   }
 
@@ -54,13 +54,13 @@ export class UserService {
     const userExists = await this.userRepository.findOne({
       where: { name: createUserDto.name },
     });
-    if (userExists) throw CustomError.badRequest("User already exists");
+    if (userExists) throw CustomError.badRequest('User already exists');
 
     const userEmailExist = await this.userRepository.findOne({
       where: { email: createUserDto.email },
     });
 
-    if (userEmailExist) throw CustomError.badRequest("User email already exists");
+    if (userEmailExist) throw CustomError.badRequest('User email already exists');
 
     try {
       const hashedPassword = bcryptAdpater.hash(createUserDto.password);
@@ -80,22 +80,22 @@ export class UserService {
   }
 
   async finUserWithRelation(id: string): Promise<UserEntity | null> {
-    const user = await this.userRepository.createQueryBuilder("user").leftJoinAndSelect("user.customer", "customer").where({ id }).getOne();
+    const user = await this.userRepository.createQueryBuilder('user').leftJoinAndSelect('user.customer', 'customer').where({ id }).getOne();
     console.log({ user });
 
     return user;
   }
 
   async findUserByEmail(email: string): Promise<UserEntity | null> {
-    return await this.userRepository.createQueryBuilder("user").addSelect("user.password").where({ email }).getOne();
+    return await this.userRepository.createQueryBuilder('user').addSelect('user.password').where({ email }).getOne();
   }
 
   async findUserByName(username: string): Promise<UserEntity | null> {
-    return await this.userRepository.createQueryBuilder("user").addSelect("user.password").where({ username }).getOne();
+    return await this.userRepository.createQueryBuilder('user').addSelect('user.password').where({ username }).getOne();
   }
 
   async findUserWithRole(id: string, role: RoleType): Promise<UserEntity | null> {
-    return await this.userRepository.createQueryBuilder("user").where({ id }).andWhere({ role }).getOne();
+    return await this.userRepository.createQueryBuilder('user').where({ id }).andWhere({ role }).getOne();
   }
 
   async findUserByID(id: string): Promise<UserEntity | null> {

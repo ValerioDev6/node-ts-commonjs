@@ -6,8 +6,8 @@ export class UpdateCategoryDto {
     if (!categoryName) {
       return [undefined, new UpdateCategoryDto()];
     }
-    if (typeof categoryName !== "string") {
-      return ["CategoryName must be a string", undefined];
+    if (typeof categoryName !== 'string') {
+      return ['CategoryName must be a string', undefined];
     }
 
     return [undefined, new UpdateCategoryDto(categoryName)];

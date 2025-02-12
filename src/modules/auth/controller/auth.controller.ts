@@ -1,12 +1,12 @@
-import { NextFunction, Request, Response } from "express";
-import { UserService } from "../../user/services/user.service";
-import { RegisterUserDto } from "../../user/dto/register-user.dto";
-import { bcryptAdpater } from "../../../config";
-import { CustomError } from "../../../shared/errors/custom-error";
-import { RegisterAuthDto } from "../../user/dto/register-auth.dto";
-import { LoginUserDto } from "../dto/login-user.dto";
-import { getNameOfDeclaration } from "typescript";
-import { AuthService } from "../services/auth.service";
+import { NextFunction, Request, Response } from 'express';
+import { UserService } from '../../user/services/user.service';
+import { RegisterUserDto } from '../../user/dto/register-user.dto';
+import { bcryptAdpater } from '../../../config';
+import { CustomError } from '../../../shared/errors/custom-error';
+import { RegisterAuthDto } from '../../user/dto/register-auth.dto';
+import { LoginUserDto } from '../dto/login-user.dto';
+import { getNameOfDeclaration } from 'typescript';
+import { AuthService } from '../services/auth.service';
 
 export class AuthController {
   constructor(private readonly auth2Service: AuthService) {}
@@ -16,7 +16,7 @@ export class AuthController {
       return res.status(error.statusCode).json({ error: error.message });
     }
 
-    return res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: 'Internal server error' });
   };
 
   createUser = (req: Request, res: Response) => {
@@ -59,7 +59,7 @@ export class AuthController {
     const { token } = req.params;
     this.auth2Service
       .validateEmail(token)
-      .then(() => res.json("Email validated"))
+      .then(() => res.json('Email validated'))
       .catch((error) => this.handleError(error, res));
   };
 
@@ -67,7 +67,7 @@ export class AuthController {
   async getProfile(req: Request, res: Response) {
     return res.json({
       message: true,
-      resp: "HOLA ADMIN",
+      resp: 'HOLA ADMIN',
     });
   }
   // getProfile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -84,7 +84,7 @@ export class AuthController {
   async getAdmin(req: Request, res: Response) {
     return res.json({
       message: true,
-      resp: "HOLA RUTA PROTEGITA",
+      resp: 'HOLA RUTA PROTEGITA',
     });
   }
 }

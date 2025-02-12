@@ -7,7 +7,7 @@ export class JWTAdapter {
   static async generateToken(payload: string | Buffer | object, options?: SignOptions): Promise<string> {
     return new Promise((resolve, reject) => {
       const signOptions: SignOptions = {
-        expiresIn: options?.expiresIn || '1h'
+        expiresIn: options?.expiresIn || '1h',
       };
 
       jwt.sign(payload, JWT_SECRET, signOptions, (err, token) => {

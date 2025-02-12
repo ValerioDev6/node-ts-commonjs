@@ -1,6 +1,6 @@
-import { UserEntity } from "../modules/user/entities/user.entity";
-import { AuthMiddleware } from "../shared/middlewares/shared.middleware";
-import { getRepositoryFactory } from "./repository.config";
+import { UserEntity } from '../modules/user/entities/user.entity';
+import { AuthMiddleware } from '../shared/middlewares/shared.middleware';
+import { getRepositoryFactory } from './repository.config';
 
 export class MiddlewareFactory {
   private static authMiddlewareInstance: AuthMiddleware;

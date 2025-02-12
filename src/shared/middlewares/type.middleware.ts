@@ -1,9 +1,9 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from 'express';
 
 export class TypeMiddleware {
   static validTypes(validTypes: string[]) {
     return (req: Request, res: Response, next: NextFunction): void => {
-      const type = req.url.split("/").at(2) ?? "";
+      const type = req.url.split('/').at(2) ?? '';
 
       if (!validTypes.includes(type)) {
         res.status(400).json({

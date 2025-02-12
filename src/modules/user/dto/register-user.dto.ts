@@ -1,6 +1,6 @@
 // import { RoleType } from "./rol.enum";
 
-import { registerUserSchema } from "./create-user.dto";
+import { registerUserSchema } from './create-user.dto';
 
 // export class RegisterUserDto {
 //   constructor(

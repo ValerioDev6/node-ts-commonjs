@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
-import { CustomError } from "../../shared/errors/custom-error";
-import { FileUploadService } from "./file.service";
-import { UploadedFile } from "express-fileupload";
+import { Request, Response } from 'express';
+import { CustomError } from '../../shared/errors/custom-error';
+import { FileUploadService } from './file.service';
+import { UploadedFile } from 'express-fileupload';
 
 export class FileUploadController {
   constructor(private readonly fileUploadService: FileUploadService) {}
@@ -10,7 +10,7 @@ export class FileUploadController {
     if (error instanceof CustomError) {
       res.status(error.statusCode).json({ error: error.message });
     }
-    return res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: 'Internal server error' });
   };
 
   uploadFile = (req: Request, res: Response) => {

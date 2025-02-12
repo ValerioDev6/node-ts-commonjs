@@ -1,9 +1,9 @@
-import e, { Request, Response } from "express";
-import { CustomError } from "../../../shared/errors/custom-error";
-import { CategoryService } from "../services/categoria.service";
-import { PaginationDto } from "../../../shared/dtos/pagination.dto";
-import { CreateCategoryDto } from "../dto/create-category.dto";
-import { UpdateCategoryDto } from "../dto/update-category.dto";
+import e, { Request, Response } from 'express';
+import { CustomError } from '../../../shared/errors/custom-error';
+import { CategoryService } from '../services/categoria.service';
+import { PaginationDto } from '../../../shared/dtos/pagination.dto';
+import { CreateCategoryDto } from '../dto/create-category.dto';
+import { UpdateCategoryDto } from '../dto/update-category.dto';
 
 export class CategoryController {
   constructor(public readonly categoryService: CategoryService) {}
@@ -13,7 +13,7 @@ export class CategoryController {
       return res.status(error.statusCode).json({ error: error.message });
     }
 
-    return res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: 'Internal server error' });
   };
 
   getCategoriesPagination = (req: Request, res: Response) => {

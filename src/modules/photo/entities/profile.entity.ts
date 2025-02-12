@@ -1,8 +1,8 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity({ name: "photo" })
+@Entity({ name: 'photo' })
 export class ProfileEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
@@ -15,14 +15,14 @@ export class ProfileEntity {
   imagePath: string;
 
   @CreateDateColumn({
-    type: "timestamp",
-    name: "created_at",
+    type: 'timestamp',
+    name: 'created_at',
   })
   createdAt: Date;
 
   @UpdateDateColumn({
-    type: "timestamp",
-    name: "updated_at",
+    type: 'timestamp',
+    name: 'updated_at',
   })
   updatedAt: Date;
 }

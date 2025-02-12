@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
-import { UserService } from "../services/user.service";
-import { CustomError } from "../../../shared/errors/custom-error";
-import { PaginationDto } from "../../../shared/dtos/pagination.dto";
-import { RegisterUserDto } from "../dto/register-user.dto";
+import { Request, Response } from 'express';
+import { UserService } from '../services/user.service';
+import { CustomError } from '../../../shared/errors/custom-error';
+import { PaginationDto } from '../../../shared/dtos/pagination.dto';
+import { RegisterUserDto } from '../dto/register-user.dto';
 
 export class UserController {
   constructor(public readonly userService: UserService) {}
@@ -11,7 +11,7 @@ export class UserController {
     if (error instanceof CustomError) {
       return res.status(error.statusCode).json({ error: error.message });
     }
-    return res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: 'Internal server error' });
   };
 
   getUsersPagination = (req: Request, res: Response) => {

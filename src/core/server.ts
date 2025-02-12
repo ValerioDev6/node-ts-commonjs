@@ -1,9 +1,9 @@
-import express from "express";
-import fileUpload from "express-fileupload";
+import express from 'express';
+import fileUpload from 'express-fileupload';
 
-import { Router } from "express";
-import { DataSource } from "typeorm";
-import { AppDataSource } from "../config";
+import { Router } from 'express';
+import { DataSource } from 'typeorm';
+import { AppDataSource } from '../config';
 
 interface Options {
   port: number;
@@ -47,10 +47,10 @@ export class Server {
   private async connectDB(): Promise<void> {
     try {
       this.dbConnection = await AppDataSource.initialize();
-      console.log("✅ Database connected successfully!");
+      console.log('✅ Database connected successfully!');
     } catch (error) {
-      console.error("❌ Database connection error:", error);
-      throw new Error("Error initializing database");
+      console.error('❌ Database connection error:', error);
+      throw new Error('Error initializing database');
     }
   }
 }

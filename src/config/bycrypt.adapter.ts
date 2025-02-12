@@ -1,4 +1,4 @@
-import { compareSync, genSaltSync, hashSync } from "bcrypt";
+import { compareSync, genSaltSync, hashSync } from 'bcrypt';
 
 export const bcryptAdpater = {
   hash: (password: string) => {

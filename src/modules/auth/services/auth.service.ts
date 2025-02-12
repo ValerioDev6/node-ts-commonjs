@@ -1,11 +1,11 @@
-import { UserEntity } from "../../user/entities/user.entity";
-import { bcryptAdpater, envs, getRepositoryFactory } from "../../../config";
-import { CustomError } from "../../../shared/errors/custom-error";
-import { Repository } from "typeorm";
-import { RegisterAuthDto } from "../../user/dto/register-auth.dto";
-import { JWTAdapter } from "../../../config/jwt-adapter";
-import { LoginUserDto } from "../dto/login-user.dto";
-import { EmailService } from "./email.service";
+import { UserEntity } from '../../user/entities/user.entity';
+import { bcryptAdpater, envs, getRepositoryFactory } from '../../../config';
+import { CustomError } from '../../../shared/errors/custom-error';
+import { Repository } from 'typeorm';
+import { RegisterAuthDto } from '../../user/dto/register-auth.dto';
+import { JWTAdapter } from '../../../config/jwt-adapter';
+import { LoginUserDto } from '../dto/login-user.dto';
+import { EmailService } from './email.service';
 
 export class AuthService {
   private readonly userRepository: Repository<UserEntity>;
@@ -13,7 +13,7 @@ export class AuthService {
     this.userRepository = getRepositoryFactory(UserEntity);
   }
 
-   async loginUser(loginUserDto: LoginUserDto) {
+  async loginUser(loginUserDto: LoginUserDto) {
     const user = await this.userRepository.findOne({
       where: { email: loginUserDto.email },
       select: {
@@ -28,13 +28,13 @@ export class AuthService {
       },
     });
 
-    if (!user) throw CustomError.badRequest("Password no validos");
+    if (!user) throw CustomError.badRequest('Password no validos');
 
     const isMatch = bcryptAdpater.compare(loginUserDto.password, user.password);
-    if (!isMatch) throw CustomError.badRequest("User and Password is not valid");
+    if (!isMatch) throw CustomError.badRequest('User and Password is not valid');
 
     const token = await JWTAdapter.generateToken({ id: user.id });
-    if (!token) throw CustomError.internalServe("Error while creating JWT");
+    if (!token) throw CustomError.internalServe('Error while creating JWT');
 
     const { password, ...userWithoutPassword } = user;
 
@@ -48,12 +48,12 @@ export class AuthService {
     const userByEmail = await this.userRepository.findOne({
       where: { email: createUserDto.email },
     });
-    if (userByEmail) throw CustomError.badRequest("Email already in use");
+    if (userByEmail) throw CustomError.badRequest('Email already in use');
 
     const userByUsername = await this.userRepository.findOne({
       where: { username: createUserDto.username },
     });
-    if (userByUsername) throw CustomError.badRequest("Username already exists");
+    if (userByUsername) throw CustomError.badRequest('Username already exists');
 
     try {
       // hasheamos passowrd
@@ -73,7 +73,7 @@ export class AuthService {
 
       //jwt usuario
       const token = await JWTAdapter.generateToken({ id: user.id });
-      if (!token) throw CustomError.internalServe("Error wile creating JWT");
+      if (!token) throw CustomError.internalServe('Error wile creating JWT');
 
       return {
         msg: true,
@@ -87,7 +87,7 @@ export class AuthService {
 
   private sendEmailValidationLink = async (email: string) => {
     const token = await JWTAdapter.generateToken({ email });
-    if (!token) throw CustomError.internalServe("Error getting token");
+    if (!token) throw CustomError.internalServe('Error getting token');
 
     const link = `${envs.WEBSERVICE_URL}/auth/validate-email/${token}`;
     const html = `
@@ -98,27 +98,27 @@ export class AuthService {
 
     const options = {
       to: email,
-      subject: "Validate your email",
+      subject: 'Validate your email',
       htmlBody: html,
     };
 
     const isSet = await this.emailService.sendEmail(options);
-    if (!isSet) throw CustomError.internalServe("Error sending email");
+    if (!isSet) throw CustomError.internalServe('Error sending email');
 
     return true;
   };
   public async validateEmail(token: string) {
     const payload = await JWTAdapter.validateToken(token);
-    if (!payload) throw CustomError.unauthorized("Invalid token");
+    if (!payload) throw CustomError.unauthorized('Invalid token');
 
     const { email } = payload as { email: string };
-    if (!email) throw CustomError.internalServe("Email not in token");
+    if (!email) throw CustomError.internalServe('Email not in token');
 
     const user = await this.userRepository.findOne({
       where: { email },
     });
 
-    if (!user) throw CustomError.badRequest("User not found");
+    if (!user) throw CustomError.badRequest('User not found');
 
     await this.userRepository.update({ email }, { emailValidated: true });
 

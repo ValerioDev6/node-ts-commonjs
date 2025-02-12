@@ -11,8 +11,10 @@
     "start": "npm run build && node dist/app.js",
     "start:prod": "export NODE_ENV=production && pnpm start",
     "typeorm": "typeorm-ts-node-commonjs",
-    "m:gen": "typeorm-ts-node-commonjs migration:generate -d ./src/config/data-source.ts ./src/migrations/ChangePhotoEntity",
-    "m:run": "typeorm-ts-node-commonjs migration:run -d ./src/config/data-source.ts"
+    "m:gen": "typeorm-ts-node-commonjs migration:generate -d ./src/config/data-source.ts ./src/migrations/CreateEntitys",
+    "m:run": "typeorm-ts-node-commonjs migration:run -d ./src/config/data-source.ts",
+    "lint": "eslint \"src/**/*.{ts,js}\"",
+    "format": "prettier --write \"src/**/*.{ts,js,json,css,md}\""
   },
   "keywords": [],
   "author": "",
@@ -23,7 +25,6 @@
     "@types/morgan": "^1.9.9",
     "@types/node": "16.11.10",
     "bcrypt": "^5.1.1",
-    "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "cors": "^2.8.5",
@@ -53,6 +54,7 @@
     "@types/uuid": "^10.0.0",
     "eslint": "^9.20.0",
     "globals": "^15.14.0",
+    "prettier": "^3.5.0",
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",

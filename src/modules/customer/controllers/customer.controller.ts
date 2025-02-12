@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
-import { CustomError } from "../../../shared/errors/custom-error";
-import { CustomerService } from "../services/customer.service";
-import { CreateCustomerDto } from "../dto/create-customer.dto";
+import { Request, Response } from 'express';
+import { CustomError } from '../../../shared/errors/custom-error';
+import { CustomerService } from '../services/customer.service';
+import { CreateCustomerDto } from '../dto/create-customer.dto';
 
 export class CustomerController {
   constructor(public readonly customerService: CustomerService) {}
@@ -11,7 +11,7 @@ export class CustomerController {
       return res.status(error.statusCode).json({ error: error.message });
     }
 
-    return res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: 'Internal server error' });
   };
 
   getCustomers = (req: Request, res: Response) => {
